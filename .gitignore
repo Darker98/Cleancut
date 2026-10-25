@@ -1,0 +1,24 @@
+# Virtual env
+.venv/
+venv/
+
+# Secrets
+.env
+
+# Per-run intermediates and outputs
+work/
+temp/
+*.log
+
+# Bundled font binaries (download per assets/fonts/README.md)
+assets/fonts/*.ttf
+assets/fonts/*.otf
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS
+Thumbs.db
+.DS_Store

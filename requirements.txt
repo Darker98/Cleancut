@@ -1,0 +1,57 @@
+# ---------------------------------------------------------------------------
+# Python 3.11 ONLY. torch / resemble-enhance do not ship wheels for 3.12+.
+#
+# DO NOT `pip install -r requirements.txt` on its own — run the ordered setup:
+#
+#     py -3.11 -m venv .venv
+#     .venv\Scripts\activate
+#     .\scripts\setup.ps1
+#
+# setup.ps1 installs, in order: build tooling, numpy 1.26 + CUDA torch, the
+# deepspeed inference-only stub, resemble-enhance (--no-deps), then this file.
+# See README "Setup" for why (deepspeed can't build on Windows without the CUDA
+# toolkit; we never use it, so a stub satisfies the dependency).
+#
+# Installed SEPARATELY by setup.ps1 (NOT listed here so they aren't clobbered):
+#   torch==2.1.1  torchaudio==2.1.1   (from the cu121 wheel index)
+#   deepspeed==0.12.4                 (the local stub in stubs/deepspeed-stub)
+#   resemble-enhance==0.0.1           (installed with --no-deps)
+# ---------------------------------------------------------------------------
+
+# --- Hard constraints (do not relax) ---
+numpy==1.26.4            # torch 2.1.1 is incompatible with numpy 2.x
+setuptools==69.5.1       # 70+ removed pkg_resources.packaging, which torch 2.1.1 imports
+huggingface_hub==0.25.2  # gradio 4.44.1 needs HfFolder/whoami (removed in hub 1.x); faster-whisper is happy with 0.25
+httpx==0.27.2            # groq 0.11.0 passes proxies= to httpx; removed in httpx 0.28
+
+# --- resemble-enhance runtime deps (it is installed with --no-deps) ---
+celluloid
+librosa
+matplotlib
+omegaconf
+pandas
+ptflops
+resampy
+rich
+scipy
+soundfile
+tabulate
+tqdm
+
+# --- Transcription / editing / verification ---
+faster-whisper==1.0.3
+auto-editor==29.3.1    # 24.x pinned the now-unavailable pyav; 29.x uses `av`
+rapidfuzz==3.9.6
+groq==0.11.0
+ffmpeg-python==0.2.0
+
+# --- Frontend / env ---
+gradio==4.44.1
+# gradio 4.44.1 predates fastapi/starlette 1.x; newer versions break its
+# TemplateResponse call ("unhashable type: 'dict'"). Pin to the compatible line.
+fastapi==0.112.2
+starlette==0.38.6
+python-dotenv==1.0.1
+
+# Note: gradio_client 1.3.0 (the match for gradio 4.44.1) has a schema bug that
+# crashes /api_info on bool schemas; app.py applies a small runtime monkeypatch.

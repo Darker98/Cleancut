@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deepspeed"
+version = "0.12.4"
+description = "Inference-only stub of deepspeed for running resemble-enhance on Windows without the CUDA toolkit or a C++ compiler. Provides only the import-time symbols resemble-enhance touches; all training APIs are intentionally non-functional."
+requires-python = ">=3.8"
+
+[tool.setuptools]
+packages = ["deepspeed", "deepspeed.accelerator", "deepspeed.runtime"]

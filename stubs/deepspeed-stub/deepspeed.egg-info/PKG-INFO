@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: deepspeed
+Version: 0.12.4
+Summary: Inference-only stub of deepspeed for running resemble-enhance on Windows without the CUDA toolkit or a C++ compiler. Provides only the import-time symbols resemble-enhance touches; all training APIs are intentionally non-functional.
+Requires-Python: >=3.8
